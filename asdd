@@ -1,0 +1,79 @@
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+
+local LocalPlayer = Players.LocalPlayer
+
+local module = {}
+
+module["gameId"] = 0
+module["Name"] = "Universal Movement"
+
+local function getHumanoid()
+    local character = LocalPlayer.Character
+    if not character then
+        return nil
+    end
+
+    return character:FindFirstChildOfClass("Humanoid")
+end
+
+-- Título
+module[1] = {
+    Type = "Text",
+    Args = {"Universal Movement"}
+}
+
+-- WalkSpeed
+module[2] = {
+    Type = "Input",
+    Args = {
+        "WalkSpeed",
+        "Set Speed",
+        function(Self, text)
+            local humanoid = getHumanoid()
+            local value = tonumber(text)
+
+            if humanoid and value then
+                humanoid.WalkSpeed = value
+            end
+        end
+    }
+}
+
+-- JumpPower
+module[3] = {
+    Type = "Input",
+    Args = {
+        "JumpPower",
+        "Set Jump",
+        function(Self, text)
+            local humanoid = getHumanoid()
+            local value = tonumber(text)
+
+            if humanoid and value then
+                humanoid.UseJumpPower = true
+                humanoid.JumpPower = value
+            end
+        end
+    }
+}
+
+-- Gravity
+module[4] = {
+    Type = "Input",
+    Args = {
+        "Gravity",
+        "Set Gravity",
+        function(Self, text)
+            local value = tonumber(text)
+
+            if value then
+                Workspace.Gravity = value
+            end
+        end
+    }
+}
+
+getgenv().Modules[#getgenv().Modules + 1] = module
+
+return module
